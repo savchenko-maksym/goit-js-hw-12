@@ -18,28 +18,26 @@ let lightbox = new SimpleLightbox('.img-list a', {
   captionDelay: 250,
 });
 
-refs.formInput.addEventListener('submit', e => {
+refs.formInput.addEventListener('submit', async e => {
   e.preventDefault();
   const userValue = e.target.elements.imgTitle.value.trim();
   refs.imgList.innerHTML = '';
   refs.loader.style.display = 'block';
-
-  searchImages(userValue)
-    .then(response => {
-      refs.loader.style.display = 'none';
-      if (response.data.hits.length === 0) {
-        iziToast.warning({
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-          position: 'topRight',
-        });
-        return;
-      }
-      renderImgs(response.data);
-    })
-    .catch(error => {
-      refs.loader.style.display = 'none';
-    });
+  try {
+    const response = await searchImages(userValue);
+    refs.loader.style.display = 'none';
+    if (response.data.hits.length === 0) {
+      iziToast.warning({
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+        position: 'topRight',
+      });
+      return;
+    }
+    renderImgs(response.data);
+  } catch (error) {
+    refs.loader.style.display = 'none';
+  }
   e.target.reset();
 });
 
