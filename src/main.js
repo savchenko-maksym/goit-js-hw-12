@@ -46,3 +46,5 @@ function renderImgs(images) {
   refs.imgList.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
 }
+
+// !=============== comment
