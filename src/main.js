@@ -48,7 +48,10 @@ refs.formInput.addEventListener('submit', async e => {
     params.total = response.data.totalHits;
     checkBtnStatus();
     hideSpinner();
-  } catch (error) {}
+  } catch (error) {
+    refs.imgList.innerHTML = '';
+    iziToast.error('error', console.log(error));
+  }
   e.target.reset();
 });
 
@@ -62,10 +65,12 @@ refs.btnLoadMore.addEventListener('click', async e => {
   params.page += 1;
   showSpinner();
   checkBtnStatus();
+
   const response = await searchImages(params.userValue, params.page);
   const markup = imageTemplate(response.data);
   refs.imgList.insertAdjacentHTML('beforeend', markup);
   hideSpinner();
+  scrollPage();
 });
 
 function showLoadMoreBtn() {
@@ -96,4 +101,14 @@ function showSpinner() {
 
 function hideSpinner() {
   refs.loader.classList.add('visually-hidden');
+}
+
+function scrollPage() {
+  const info = refs.imgList.firstElementChild.getBoundingClientRect();
+  const height = info.height;
+  scrollBy({
+    top: height * 3,
+    left: 0,
+    behavior: 'smooth',
+  });
 }
