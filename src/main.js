@@ -27,15 +27,15 @@ let lightbox = new SimpleLightbox('.img-list a', {
 
 refs.formInput.addEventListener('submit', async e => {
   e.preventDefault();
-
+  showSpinner();
   params.userValue = e.target.elements.imgTitle.value.trim();
   params.page = 1;
 
   refs.imgList.innerHTML = '';
-  refs.loader.style.display = 'block';
+
   try {
     const response = await searchImages(params.userValue, params.page);
-    refs.loader.style.display = 'none';
+
     if (response.data.hits.length === 0) {
       iziToast.warning({
         message:
@@ -47,9 +47,8 @@ refs.formInput.addEventListener('submit', async e => {
     renderImgs(response.data);
     params.total = response.data.totalHits;
     checkBtnStatus();
-  } catch (error) {
-    refs.loader.style.display = 'none';
-  }
+    hideSpinner();
+  } catch (error) {}
   e.target.reset();
 });
 
@@ -61,10 +60,12 @@ function renderImgs(images) {
 
 refs.btnLoadMore.addEventListener('click', async e => {
   params.page += 1;
+  showSpinner();
   checkBtnStatus();
   const response = await searchImages(params.userValue, params.page);
   const markup = imageTemplate(response.data);
   refs.imgList.insertAdjacentHTML('beforeend', markup);
+  hideSpinner();
 });
 
 function showLoadMoreBtn() {
@@ -87,4 +88,12 @@ function checkBtnStatus() {
   } else {
     showLoadMoreBtn();
   }
+}
+
+function showSpinner() {
+  refs.loader.classList.remove('visually-hidden');
+}
+
+function hideSpinner() {
+  refs.loader.classList.add('visually-hidden');
 }
