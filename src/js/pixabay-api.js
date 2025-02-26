@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function searchImages(imgsName) {
+export function searchImages(imgsName, page) {
   const BASE_URL = 'https://pixabay.com';
   const END_POINT = '/api/';
   const url = BASE_URL + END_POINT;
@@ -11,6 +11,8 @@ export function searchImages(imgsName) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    page: page,
+    per_page: 40,
   };
   const headers = { Accept: 'application/json' };
 

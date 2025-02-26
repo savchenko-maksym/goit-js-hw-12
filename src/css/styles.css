@@ -37,6 +37,19 @@ img {
   height: auto;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
 .form {
   margin-top: 100px;
   display: flex;
@@ -81,7 +94,6 @@ img {
 }
 
 .button {
-  width: 91px;
   background-color: #4e75ff;
   border: none;
   color: #fff;
@@ -189,6 +201,14 @@ li:hover {
   border-color: #ff3d00;
   animation: prixClipFix 2s linear infinite, rotate 0.5s linear infinite reverse;
   inset: 6px;
+}
+
+.wrap-js-btn-load-more {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 44px;
 }
 
 @keyframes rotate {
