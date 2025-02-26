@@ -71,6 +71,7 @@ refs.btnLoadMore.addEventListener('click', async e => {
   refs.imgList.insertAdjacentHTML('beforeend', markup);
   hideSpinner();
   scrollPage();
+  lightbox.refresh();
 });
 
 function showLoadMoreBtn() {
